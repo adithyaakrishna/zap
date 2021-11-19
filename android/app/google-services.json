@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "18768274338",
+    "project_id": "kas-1-app",
+    "storage_bucket": "kas-1-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:18768274338:android:cae0c1109e16b443dcc8fb",
+        "android_client_info": {
+          "package_name": "com.kas.zap"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "18768274338-ourrqj6rpqqp8l9oj1dhprk6qqn9n328.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCZS7o6ZE_hoeh7vbPahMfwSLEquABHcNw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "18768274338-ourrqj6rpqqp8l9oj1dhprk6qqn9n328.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
