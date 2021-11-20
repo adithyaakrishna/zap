@@ -58,12 +58,15 @@ class _SignUpComponentState extends State<SignUpComponent> {
   @override
   Widget build(BuildContext context) {
     return Column(
+      
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Container(
+          
           width: MediaQuery.of(context).size.width * 0.9,
           margin: EdgeInsets.only(top: 20, bottom: 20),
           child: TextField(
+            
             controller: _username,
             style: TextStyle(color: Colors.white),
             cursorColor: Color(0XFF5C7ECC),

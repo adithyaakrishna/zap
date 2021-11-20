@@ -1,6 +1,10 @@
+// ignore_for_file: file_names, prefer_const_constructors, prefer_const_constructors_in_immutables
+
 import 'package:flutter/material.dart';
 import 'package:zap/Components/LoginComponent.dart';
 import 'package:zap/Components/SignUpComponent.dart';
+import 'package:zap/components/NavBarComponent.dart';
+import 'package:zap/screens/MapScreen.dart';
 
 class LoginScreen extends StatefulWidget {
   LoginScreen({Key? key}) : super(key: key);
@@ -41,7 +45,7 @@ class _LoginScreenState extends State<LoginScreen> {
               Container(
                 margin: EdgeInsets.only(top: 10, bottom: 10),
                 child: Text(
-                  _loginActive ? 'Bonjour' : "Jump on the Board",
+                  _loginActive ? 'Zap' : "Get Zapped",
                   style: TextStyle(
                       color: Colors.blue,
                       fontSize: 50,
@@ -97,7 +101,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   )
                 ],
               ),
-              _loginActive ? LoginComponent() : SignUpComponent()
+              _loginActive ? MapScreen() : MapScreen()
             ],
           ),
         ),

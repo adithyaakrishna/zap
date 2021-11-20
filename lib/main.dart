@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:splashscreen/splashscreen.dart';
+import 'package:zap/components/NavBarComponent.dart';
 import 'package:zap/screens/LoginScreen.dart';
 
 void main() {
@@ -26,7 +27,7 @@ class Splash2 extends StatelessWidget {
   Widget build(BuildContext context) {
     return SplashScreen(
       seconds: 5,
-      navigateAfterSeconds: new LoginScreen(),
+      navigateAfterSeconds: new MyApp(),
       title: new Text(
         'Zap',
         textScaleFactor: 2,

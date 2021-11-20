@@ -88,6 +88,7 @@ class _LoginComponentState extends State<LoginComponent> {
           ),
         ),
         Container(
+          
           width: MediaQuery.of(context).size.width * 0.9,
           height: 50,
           margin: EdgeInsets.only(top: 20, bottom: 20),
