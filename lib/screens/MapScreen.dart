@@ -1,90 +1,70 @@
-// ignore: file_names
-// ignore_for_file: no_logic_in_create_state
+import 'dart:async';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:zap/screens/HomeScreen.dart';
-import 'package:zap/src/locations.dart' as locations;
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 
 class MapScreen extends StatefulWidget {
-  const MapScreen({Key? key}) : super(key: key);
-
   @override
-  _MyAppState createState() => _MyAppState();
+  _MapScreenState createState() => _MapScreenState();
 }
 
+class _MapScreenState extends State<MapScreen> {
+  final Completer<GoogleMapController> _controller = Completer();
 
-class _MyAppState extends State<MapScreen> {
-  int _page = 0;
-final _pageList = [
-  Text('A'),
-  Text('B'),
-  Text('C'),
-];
+  static final CameraPosition _kGooglePlex = CameraPosition(
+    target: LatLng(37.42796133580664, -122.085749655962),
+    zoom: 14.4746,
+  );
 
-  GlobalKey<CurvedNavigationBarState> _bottomNavigationKey = GlobalKey();
-  final Map<String, Marker> _markers = {};
-  Future<void> _onMapCreated(GoogleMapController controller) async {
-    final googleOffices = await locations.getGoogleOffices();
-    setState(() {
-      _markers.clear();
-      for (final office in googleOffices.offices) {
-        final marker = Marker(
-          markerId: MarkerId(office.name),
-          position: LatLng(office.lat, office.lng),
-          infoWindow: InfoWindow(
-            title: office.name,
-            snippet: office.address,
-          ),
-        );
-        _markers[office.name] = marker;
-      }
-    });
-  }
-
-  // GoogleMap(
-  //         onMapCreated: _onMapCreated,
-  //         initialCameraPosition: const CameraPosition(
-  //           target: LatLng(0, 0),
-  //           zoom: 2,
-  //         ),
-  //         markers: _markers.values.toSet(),
-  //       ),
-  //     ),
+  static final CameraPosition _kLake = CameraPosition(
+      bearing: 192.8334901395799,
+      target: LatLng(37.43296265331129, -122.08832357078792),
+      tilt: 59.440717697143555,
+      zoom: 19.151926040649414);
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('EV Charging Locations'),
-          backgroundColor: Colors.blue,
-        ),
-        body: _pageList[ _page],
-        bottomNavigationBar: BottomNavigationBar(
-          currentIndex: _page,
-          onTap: (int index){
-            setState(() {
-              _selectedTab = index;
-            });
-          },
-          items: [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              title: Text('Home'),
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.category),
-              title: Text('Categories'),
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.search),
-              title: Text('Search'),
-            ),
-          ],
-        ),
-      ),
+    return Scaffold(
+      body: StreamBuilder<QuerySnapshot>(
+          stream: FirebaseFirestore.instance.collection('offices').snapshots(),
+          builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+            if (snapshot.hasData) {
+              List<Marker> _markerList = [];
+              int i = 0;
+              for (DocumentSnapshot element in snapshot.data!.docs) {
+                Map<String, dynamic> data =
+                    element.data()! as Map<String, dynamic>;
+                Marker marker = Marker(
+                  markerId: MarkerId(i.toString()),
+                  position: LatLng(data['lat'], data['lng']),
+                );
+                _markerList.add(marker);
+                i++;
+              }
+              print("Printing the list");
+              print(_markerList);
+              return GoogleMap(
+                markers: Set.from(_markerList),
+                mapType: MapType.hybrid,
+                initialCameraPosition: _kGooglePlex,
+                onMapCreated: (GoogleMapController controller) {
+                  _controller.complete(controller);
+                },
+              );
+            }
+            return CircularProgressIndicator();
+          }),
+      // floatingActionButton: FloatingActionButton.extended(
+      //   onPressed: _goToTheLake,
+      //   label: Text('To the lake!'),
+      //   icon: Icon(Icons.directions_boat),
+      // ),
     );
+  }
+
+  Future<void> _goToTheLake() async {
+    final GoogleMapController controller = await _controller.future;
+    controller.animateCamera(CameraUpdate.newCameraPosition(_kLake));
   }
 }

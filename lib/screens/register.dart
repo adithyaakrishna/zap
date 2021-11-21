@@ -1,24 +1,19 @@
-// ignore_for_file: file_names, prefer_const_constructors, prefer_const_constructors_in_immutables
-
 import 'package:flutter/material.dart';
 // import 'package:zap/Components/LoginComponent.dart';
 // import 'package:zap/Components/SignUpComponent.dart';
 import 'package:zap/components/NavBarComponent.dart';
-import 'package:zap/screens/HomeScreen.dart';
-import 'package:zap/screens/register.dart';
+import 'package:zap/screens/LoginScreen.dart';
 import 'package:zap/services/auth.dart';
 
 import '../loading.dart';
 import 'forgotpass.dart';
 
-class LoginScreen extends StatefulWidget {
-  LoginScreen({Key? key}) : super(key: key);
-
+class SignUp extends StatefulWidget {
   @override
-  _LoginScreenState createState() => _LoginScreenState();
+  _SignUpState createState() => _SignUpState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _SignUpState extends State<SignUp> {
   bool _loading = false;
   final AuthService _auth = AuthService();
   //declaring the variables
@@ -110,25 +105,26 @@ class _LoginScreenState extends State<LoginScreen> {
                           child: MaterialButton(
                             minWidth: MediaQuery.of(context).size.width * 0.25,
                             padding:
-                                EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                                const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
                             onPressed: () async {
                               if (_formkey.currentState!.validate()) {
                                 setState(() {
                                   _loading = true;
                                 });
-                                String result = await _auth
-                                    .signinwithemailandpass(email, password)
+                                bool result = await _auth
+                                    .registerwithemailandpassuser(
+                                        email, password)
                                     .whenComplete(() {
                                   setState(() {
                                     _loading = false;
                                   });
                                 });
                                 print("result is when you sign in $result");
-                                if (result!="false") {
+                                if (result == true) {
                                   Navigator.of(context).push(MaterialPageRoute(
-                                      builder: (context) => HomePage()));
+                                      builder: (context) => LoginScreen()));
                                 }
-                                if (result == 'false') {
+                                if (result == false) {
                                   setState(() {
                                     error =
                                         'Could not sign in with those credentials';
@@ -137,7 +133,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               }
                             },
                             child: Text(
-                              "Login",
+                              "Sign Up",
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                   fontSize: 20,
@@ -155,14 +151,14 @@ class _LoginScreenState extends State<LoginScreen> {
                           color: Color(appbarcolor),
                           child: MaterialButton(
                             minWidth: MediaQuery.of(context).size.width * 0.25,
-                            padding:
-                                EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                            padding: const EdgeInsets.fromLTRB(
+                                20.0, 15.0, 20.0, 15.0),
                             onPressed: () async {
                               Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => SignUp()));
+                                  builder: (context) => LoginScreen()));
                             },
-                            child: Text(
-                              "Sign Up",
+                            child: const Text(
+                              "Login",
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                   fontSize: 20,
@@ -184,7 +180,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             }),
                         Text(
                           error,
-                          style: TextStyle(color: Colors.red, fontSize: 14.0),
+                          style: const TextStyle(
+                              color: Colors.red, fontSize: 14.0),
                         ),
                       ],
                     ),
