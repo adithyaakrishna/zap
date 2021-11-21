@@ -40,5 +40,4 @@ The app is completely coded using dart language with Flutter as the UI Library. 
 - Creating of Wallets for the users of the app to enable faster payments.
 - Integrating Payment gateways like UPI, Paypal, etc.
 - Building a Low cost IOT enabled Smart Charger and Charging brick for users to use.
-- Developing a community section to host events and meet-ups exclusive to Zap Users
-- 
+- Developing a community section to host events and meet-ups exclusive to Zap Users.
