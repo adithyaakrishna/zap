@@ -45,6 +45,9 @@ class _MapScreenState extends State<MapScreen> {
               print("Printing the list");
               print(_markerList);
               return GoogleMap(
+                onTap: (LatLng latLng) {
+                  
+                },
                 markers: Set.from(_markerList),
                 mapType: MapType.hybrid,
                 initialCameraPosition: _kGooglePlex,

@@ -279,7 +279,7 @@ class _AddLocationState extends State<AddLocation> {
                                             duration: Duration(seconds: 100),
                                             backgroundColor: Color(appbarcolor),
                                             content: Text(
-                                                "A verification email has been sent to your email id"),
+                                                "Your location has been successfully added"),
                                             action: SnackBarAction(
                                                 label: "Okay",
                                                 onPressed: () {
