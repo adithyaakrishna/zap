@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:zap/Components/LoginComponent.dart';
 import 'package:zap/Components/SignUpComponent.dart';
 import 'package:zap/components/NavBarComponent.dart';
-import 'package:zap/screens/MapScreen.dart';
 
 class LoginScreen extends StatefulWidget {
   LoginScreen({Key? key}) : super(key: key);
@@ -101,7 +100,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   )
                 ],
               ),
-              _loginActive ? MapScreen() : MapScreen()
+              _loginActive ? BottomNavBar() : BottomNavBar()
             ],
           ),
         ),
